@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
+import LyricsContainer from '../containers/LyricsContainer';
 
 const Sidebar = (props) => {
 
@@ -16,6 +17,11 @@ const Sidebar = (props) => {
       <section>
         <h4 className="menu-item">
           <Link to='/artists'>ARTISTS</Link>
+        </h4>
+      </section>
+      <section>
+        <h4 className="menu-item">
+          <Link to='/lyrics'>LYRICS</Link>
         </h4>
       </section>
       <hr />
