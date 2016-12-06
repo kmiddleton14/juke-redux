@@ -3,6 +3,7 @@ import axios from 'axios';
 import { hashHistory } from 'react-router';
 
 import initialState from '../initialState';
+import store from '../store';
 import AUDIO from '../audio';
 
 import Albums from '../components/Albums.js';
@@ -10,13 +11,18 @@ import Album from '../components/Album';
 import Sidebar from '../components/Sidebar';
 import Player from '../components/Player';
 
+import { startPlaying, play } from '../action-creators/player';
+
 import { convertAlbum, convertAlbums, convertSong, skip } from '../utils';
 
 export default class AppContainer extends Component {
 
   constructor (props) {
+    console.log(store);
+    console.log(store.lyrics);
+    console.log(store.player);
     super(props);
-    this.state = initialState;
+    this.state = Object.assign(initialState, store.player.getState());
 
     this.toggle = this.toggle.bind(this);
     this.toggleOne = this.toggleOne.bind(this);
@@ -31,6 +37,9 @@ export default class AppContainer extends Component {
   }
 
   componentDidMount () {
+    this.unsubscribe = store.player.subscribe(() => {
+      this.setState(store.player.getState());
+    })
 
     Promise
       .all([
@@ -47,6 +56,10 @@ export default class AppContainer extends Component {
       this.setProgress(AUDIO.currentTime / AUDIO.duration));
   }
 
+  componentWillUnmount () {
+    this.unsubscribe();
+  }
+
   onLoad (albums, artists, playlists) {
     this.setState({
       albums: convertAlbums(albums),
@@ -56,8 +69,7 @@ export default class AppContainer extends Component {
   }
 
   play () {
-    AUDIO.play();
-    this.setState({ isPlaying: true });
+    store.player.dispatch(play);
   }
 
   pause () {
