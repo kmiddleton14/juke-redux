@@ -10,7 +10,7 @@ class LyricsContainer extends React.Component {
     this.state = Object.assign({
       artistQuery: '',
       songQuery: ''
-    }, store.lyrics.getState());
+    }, store.getState());
 
     this.setArtist = this.setArtist.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -18,7 +18,7 @@ class LyricsContainer extends React.Component {
   }
 
   handleSubmit () {
-    store.lyrics.dispatch(fetchLyrics(this.state.artistQuery, this.state.songQuery));
+    store.dispatch(fetchLyrics(this.state.artistQuery, this.state.songQuery));
   }
 
   setArtist(artist) {
@@ -30,8 +30,8 @@ class LyricsContainer extends React.Component {
   }
 
   componentDidMount () {
-    this.unsubscribe = store.lyrics.subscribe(() => {
-      this.setState(store.lyrics.getState());
+    this.unsubscribe = store.subscribe(() => {
+      this.setState(store.getState());
     })
   }
 
@@ -42,9 +42,9 @@ class LyricsContainer extends React.Component {
   render () {
     return (
       <Lyrics 
-      text={this.state.lyric}
-      artistQuery={this.state.artistQuery}
-      songQuery={this.state.songQuery}
+      text={this.state.lyrics.lyric}
+      artistQuery={this.state.lyrics.artistQuery}
+      songQuery={this.state.lyrics.songQuery}
       setSong={this.setSong}
       setArtist={this.setArtist}
       submit={this.handleSubmit}

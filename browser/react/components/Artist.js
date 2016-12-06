@@ -17,6 +17,7 @@ class Artist extends React.Component {
     const songs = artist.songs || [];
     const children = this.props.children;
 
+    console.log("Coming from Artist component: ", this.props)
     return (
       <div>
         <h3>{ artist.name }</h3>
