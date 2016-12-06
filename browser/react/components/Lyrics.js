@@ -11,10 +11,11 @@ const Lyrics = (props) => {
     props.setSong(e.target.value);
   }
 
+
   return (
     <div id='lyrics'>
       <div>
-        <form className='form-group' style={{marginTop: '20px'}} onSubmit={props.handleSubmit}>
+        <form className='form-group' style={{marginTop: '20px'}} onSubmit={props.submit}>
           <input
             type='text'
             onChange={artistChange}
@@ -31,11 +32,11 @@ const Lyrics = (props) => {
             placeholder="Enter song name"
           />
           <hr/>
-          <button type="submit" onClick={props.handleSubmit} className="btn btn-success">Search</button>
+          <button type="submit" className="btn btn-success">Search</button>
         </form>
       </div>
       <div>
-      {props.text && <pre>{props.text}</pre>}
+      <pre>{props.text || "Search song"}</pre>
       </div>
     </div>
   );
