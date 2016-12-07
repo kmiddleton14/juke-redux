@@ -15,6 +15,8 @@ import { pause, play, load, toggleOne, toggle, startSong, next, prev } from '../
 
 import { fetchAlbums, fetchAlbum } from '../action-creators/albums';
 
+import { fetchArtists, fetchArtist } from '../action-creators/artists';
+
 import { convertAlbum, convertAlbums, convertSong, skip } from '../utils';
 
 export default class AppContainer extends Component {
@@ -42,11 +44,12 @@ export default class AppContainer extends Component {
     })
 
     store.dispatch(fetchAlbums())
+    store.dispatch(fetchArtists())
 
     Promise
       .all([
         
-        axios.get('/api/artists/'),
+        
         axios.get('/api/playlists')
       ])
       .then(res => res.map(r => r.data))
@@ -62,10 +65,10 @@ export default class AppContainer extends Component {
     this.unsubscribe();
   }
 
-  onLoad (artists, playlists) {
+  onLoad ( playlists) {
     this.setState({
       //albums: convertAlbums(albums),
-      artists: artists,
+      
       playlists: playlists
     });
   }
