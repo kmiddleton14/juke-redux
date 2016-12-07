@@ -13,6 +13,8 @@ import Player from '../components/Player';
 
 import { pause, play, load, toggleOne, toggle, startSong, next, prev } from '../action-creators/player';
 
+import { fetchAlbums, fetchAlbum } from '../action-creators/albums';
+
 import { convertAlbum, convertAlbums, convertSong, skip } from '../utils';
 
 export default class AppContainer extends Component {
@@ -39,9 +41,11 @@ export default class AppContainer extends Component {
       this.setState(store.getState());
     })
 
+    store.dispatch(fetchAlbums())
+
     Promise
       .all([
-        axios.get('/api/albums/'),
+        
         axios.get('/api/artists/'),
         axios.get('/api/playlists')
       ])
@@ -58,9 +62,9 @@ export default class AppContainer extends Component {
     this.unsubscribe();
   }
 
-  onLoad (albums, artists, playlists) {
+  onLoad (artists, playlists) {
     this.setState({
-      albums: convertAlbums(albums),
+      //albums: convertAlbums(albums),
       artists: artists,
       playlists: playlists
     });
@@ -103,11 +107,7 @@ export default class AppContainer extends Component {
   }
 
   selectAlbum (albumId) {
-    axios.get(`/api/albums/${albumId}`)
-      .then(res => res.data)
-      .then(album => this.setState({
-        selectedAlbum: convertAlbum(album)
-      }));
+    store.dispatch(fetchAlbum(albumId))
   }
 
   selectArtist (artistId) {
@@ -184,7 +184,7 @@ export default class AppContainer extends Component {
 
   render () {
 
-    const props = Object.assign({}, this.state, {
+    const props = Object.assign({}, this.state, this.state.albums, {
       toggleOne: this.toggleOne,
       toggle: this.toggle,
       selectAlbum: this.selectAlbum,
@@ -192,7 +192,8 @@ export default class AppContainer extends Component {
       addPlaylist: this.addPlaylist,
       selectPlaylist: this.selectPlaylist,
       loadSongs: this.loadSongs,
-      addSongToPlaylist: this.addSongToPlaylist
+      addSongToPlaylist: this.addSongToPlaylist,
+
     });
 
     return (
