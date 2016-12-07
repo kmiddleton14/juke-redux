@@ -17,7 +17,6 @@ class Artist extends React.Component {
     const songs = artist.songs || [];
     const children = this.props.children;
 
-    console.log("Coming from Artist component: ", this.props)
     return (
       <div>
         <h3>{ artist.name }</h3>
@@ -26,9 +25,10 @@ class Artist extends React.Component {
           <li><Link to={`/artists/${artist.id}/songs`}>SONGS</Link></li>
         </ul>
         {
-          children && React.cloneElement(children, Object.assign({}, this.props, {
+          children && React.cloneElement(children, Object.assign({}, this.props.player, {
             albums: albums,
-            songs: songs
+            songs: songs,
+            toggleOne: this.props.toggleOne
           }))
         }
       </div>

@@ -3,11 +3,9 @@ import React from 'react';
 const Songs = (props) => {
 
   const songs = props.songs;
-  const currentSong = props.player.currentSong;
-  const isPlaying = props.player.isPlaying;
+  const currentSong = props.currentSong;
+  const isPlaying = props.isPlaying;
   const toggle = props.toggleOne;
-
-  console.log("current song within the Songs container: ", props)
 
   return (
     <table className='table'>

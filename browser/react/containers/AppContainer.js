@@ -18,9 +18,7 @@ import { convertAlbum, convertAlbums, convertSong, skip } from '../utils';
 export default class AppContainer extends Component {
 
   constructor (props) {
-    console.log(store);
-    console.log(store.lyrics);
-    console.log(store.player);
+
     super(props);
     this.state = Object.assign(initialState, store.getState());
 
@@ -37,7 +35,6 @@ export default class AppContainer extends Component {
   }
 
   componentDidMount () {
-    console.log("Coming from componentDidMount: ", store.getState())
     this.unsubscribe = store.subscribe(() => {
       this.setState(store.getState());
     })
@@ -186,7 +183,6 @@ export default class AppContainer extends Component {
   }
 
   render () {
-    console.log("The props in app container", this.state)
 
     const props = Object.assign({}, this.state, {
       toggleOne: this.toggleOne,

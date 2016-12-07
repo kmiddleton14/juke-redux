@@ -19,13 +19,12 @@ class Playlist extends React.Component {
   }
 
   render () {
-
     const playlist = this.props.selectedPlaylist;
 
     return (
       <div>
         <h3>{ playlist.name }</h3>
-        <Songs {...this.props} songs={playlist.songs} />
+        <Songs {...this.props.player} toggleOne={this.props.toggleOne} songs={playlist.songs} />
         { playlist.songs && !playlist.songs.length && <small>No songs.</small> }
         <hr />
         <AddSongContainer {...this.props} />
