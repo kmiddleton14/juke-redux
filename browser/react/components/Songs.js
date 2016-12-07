@@ -5,7 +5,7 @@ const Songs = (props) => {
   const songs = props.songs;
   const currentSong = props.player.currentSong;
   const isPlaying = props.player.isPlaying;
-  const toggle = props.player.toggleOne;
+  const toggle = props.toggleOne;
 
   console.log("current song within the Songs container: ", props)
 

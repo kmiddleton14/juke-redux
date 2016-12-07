@@ -1,6 +1,7 @@
 import { START_PLAYING, STOP_PLAYING, SET_CURRENT_SONG, SET_LIST } from '../constants';
 import axios from 'axios'
 import AUDIO from '../audio';
+import { convertAlbum, convertAlbums, convertSong, skip } from '../utils';
 
 const startPlaying = function () {
   return {
@@ -62,7 +63,7 @@ const startSong = function(song, list){
 
 const toggle = function(){
 	return function(dispatch, getState){
-		const { isPlaying } = getState();
+		const isPlaying = getState().player.isPlaying;
 		if(isPlaying) dispatch(pause());
 		else dispatch(play())
 	}
@@ -71,8 +72,8 @@ const toggle = function(){
 
 const toggleOne = function(selectedSong, selectedSongList) {
 	return function(dispatch, getState){
-		const { currentSong } = getState();
-		if(selectedSong.id !== currentSong.id){
+		const currentSong = getState().player.currentSong;
+		if (selectedSong.id !== currentSong.id){
 			dispatch(startSong(selectedSong, selectedSongList))
 		}else{
 			dispatch(toggle())
@@ -83,13 +84,13 @@ const toggleOne = function(selectedSong, selectedSongList) {
 
 const next = function(){
 	return function(dispatch, getState){
-		dispatch(startSong(...skip(1, getState())));
+		dispatch(startSong(...skip(1, getState().player)));
 	}
 }
 
 const prev = function(){
 	return function(dispatch, getState){
-		dispatch(startSong(...skip(-1, getState())));
+		dispatch(startSong(...skip(-1, getState().player)));
 	}
 }
 

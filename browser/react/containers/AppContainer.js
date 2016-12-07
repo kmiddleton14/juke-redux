@@ -189,8 +189,8 @@ export default class AppContainer extends Component {
     console.log("The props in app container", this.state)
 
     const props = Object.assign({}, this.state, {
-      toggleOne: this.state.player.toggleOne,
-      toggle: this.state.player.toggle,
+      toggleOne: this.toggleOne,
+      toggle: this.toggle,
       selectAlbum: this.selectAlbum,
       selectArtist: this.selectArtist,
       addPlaylist: this.addPlaylist,
@@ -214,9 +214,9 @@ export default class AppContainer extends Component {
           currentSongList={this.state.player.currentSongList}
           isPlaying={this.state.player.isPlaying}
           progress={this.state.player.progress}
-          next={this.state.player.next}
-          prev={this.state.player.prev}
-          toggle={this.state.player.toggle}
+          next={this.next}
+          prev={this.prev}
+          toggle={this.toggle}
         />
       </div>
     );
